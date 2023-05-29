@@ -13,9 +13,9 @@ SERVING_SIZE = [
 ]
 class food(models.Model):
     food_name = models.CharField("Dish name",max_length=255,blank=False)
-    serving_size = models.Choices("Serving choices",SERVING_SIZE)
+    serving_size = models.CharField(choices=SERVING_SIZE,default="L",max_length=255)
     food_price = models.IntegerField("Dish price",blank=False)
-    final_output_price = models.IntegerField("Dish Output price")
+    final_output_price = models.IntegerField("Dish Output price",blank=True,null=True)
     #food_picture = models.ImageField("Dish Image",blank=True,null=True,upload_to='')
     food_rating = models.IntegerField(default=0)
 
@@ -35,7 +35,7 @@ class Cart(models.Model):
     order_date = models.DateTimeField(blank=True,null = True)
 
     def __str__(self):
-        return self.Site_user + "Cart"
+        return self.Site_user 
     
     @login_required
     def remove_from_cart(self,food_id):
@@ -60,7 +60,7 @@ class Foodorder(models.Model):
     order_owner = models.CharField(blank=False,max_length=255,default="")
     i_d = models.IntegerField(blank=False)
     cart_used = models.ManyToManyField(Cart)
-    name = models.CharField("Order item name",blank=False,max_length=255)
+    name = models.TextField("Order item name",blank=False,max_length=255)
     price = models.IntegerField("Order item price",blank = False)
     quantity = models.IntegerField("Order item quantity",blank=False,default=0)
     #picture = models.ImageField("Order item picture",blank=True,null = True)
@@ -70,4 +70,5 @@ class Foodorder(models.Model):
     
     def cost(self):
         return self.quantity*self.price
+
     
