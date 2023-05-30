@@ -21,22 +21,19 @@ class food(models.Model):
     food_rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.food_name
+        return str(self.food_name)
         
 class Cart(models.Model):
     Site_user = models.ForeignKey(CustomUser,on_delete= models.CASCADE,null=True)
     order_date = models.DateTimeField(blank=True,null = True)
 
     def __str__(self):
-        return self.Site_user 
+        return str(self.Site_user) 
     
     @login_required
     def get_cart_price(self):
         return sum(food_order.cost for food_order in Foodorder.objects.filter(cart_used = self))
     
-    @login_required
-    def get_cart(self):
-        return Foodorder.objects.filter(cart_used = self)
 
 
         
@@ -50,7 +47,7 @@ class Foodorder(models.Model):
     picture = models.ImageField("Order item picture",blank=True,null = True)
 
     def __str__(self):
-        return self.name
+        return str(self.name) 
     
     def cost(self):
         return self.quantity*self.price

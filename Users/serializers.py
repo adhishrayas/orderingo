@@ -6,7 +6,7 @@ class get_cart_serializer(serializers.ModelSerializer):
 
     class Meta:
         model = Foodorder
-        fields = ["i_d","name","price","quantity","picture"]
+        fields = ["i_d","order_owner","name","price","quantity","picture"]
 
 class User_details_serializer(serializers.ModelSerializer):
 

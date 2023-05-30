@@ -26,7 +26,7 @@ class Menu_item_detail_view(generics.RetrieveUpdateAPIView):
                                                     price = item.final_output_price,
                                                     picture = item.food_picture,
                                                     name = item.food_name,
-                                                    order_owner = request.user)
+                                                    order_owner = str(request.user))
         order.cart_used.add(cart)
         order.quantity += 1
         order.save()
