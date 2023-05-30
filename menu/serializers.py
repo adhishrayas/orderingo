@@ -5,7 +5,7 @@ class Food_serializer(serializers.ModelSerializer):
 
     class Meta:
         model = food
-        fields = ["id","food_name","food_price"]
+        fields = ["id","food_name","food_price","food_picture"]
 
 class Food_detail_serializer(serializers.ModelSerializer):
       food_price = serializers.CharField(read_only = True)
@@ -13,8 +13,4 @@ class Food_detail_serializer(serializers.ModelSerializer):
           model = food
           fields = ["id","food_name","food_price","serving_size"]
 
-class get_cart_serializer(serializers.ModelSerializer):
-    total = serializers.IntegerField(read_only = True)
-    class Meta:
-        model = Foodorder
-        fields = ["i_d","name","price","quantity","total"]
+ 

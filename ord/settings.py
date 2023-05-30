@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     #local apps
     'menu.apps.MenuConfig',
+    'Users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,7 @@ ROOT_URLCONF = 'ord.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'email')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,5 +142,17 @@ REST_FRAMEWORK = {
 'rest_framework.authentication.BasicAuthentication'
 ],
 }
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "adhishrayas@gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = "******"
 SITE_ID = 1 
+AUTH_USER_MODEL = "Users.CustomUser"
+ACCOUNT_AUTHENTICATION_METHOD ="email"
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
+MEDIA_URL = '/Media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'Media')
+EMAIL_HOST_USER = ""

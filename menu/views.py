@@ -6,7 +6,7 @@ from rest_framework import generics
 from django.urls import reverse
 from django.contrib.auth.models import User
 from .models import Cart,food,Foodorder
-from .serializers import Food_serializer,Food_detail_serializer,get_cart_serializer
+from .serializers import Food_serializer,Food_detail_serializer
 # Create your views here.
 
 
@@ -23,8 +23,8 @@ class Menu_item_detail_view(generics.RetrieveUpdateAPIView):
         item = get_object_or_404(food,pk = pk)
         cart,created = Cart.objects.get_or_create(Site_user = request.user)
         order,created = Foodorder.objects.get_or_create(i_d = pk,
-                                                   price = item.final_output_price,
-                                                   # picture = item.food_picture,
+                                                    price = item.final_output_price,
+                                                    picture = item.food_picture,
                                                     name = item.food_name,
                                                     order_owner = request.user)
         order.cart_used.add(cart)
@@ -32,10 +32,3 @@ class Menu_item_detail_view(generics.RetrieveUpdateAPIView):
         order.save()
         return HttpResponseRedirect(reverse("menu:details"))
 
-class get_cart_view(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = get_cart_serializer
-
-    def get_queryset(self):
-        c = get_object_or_404(Cart,Site_user = self.request.user)
-        return Foodorder.objects.filter(cart_used = c)
-    
