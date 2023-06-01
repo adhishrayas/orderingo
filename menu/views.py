@@ -30,5 +30,5 @@ class Menu_item_detail_view(generics.RetrieveUpdateAPIView):
         order.cart_used.add(cart)
         order.quantity += 1
         order.save()
-        return HttpResponseRedirect(reverse("menu:details"))
+        return HttpResponseRedirect(reverse("menu:details",args = (pk,)))
 

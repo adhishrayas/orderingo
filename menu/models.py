@@ -29,13 +29,6 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.Site_user) 
-    
-    @login_required
-    def get_cart_price(self):
-        return sum(food_order.cost for food_order in Foodorder.objects.filter(cart_used = self))
-    
-
-
         
 class Foodorder(models.Model):
     order_owner = models.CharField(blank=False,max_length=255,default="")

@@ -13,7 +13,6 @@ from Helpers import permissions
 
 class get_cart_view(generics.ListAPIView):
     serializer_class = get_cart_serializer
-
     def get_queryset(self):
         return Foodorder.objects.filter(order_owner = self.request.user)
 
@@ -25,10 +24,9 @@ class User_account_view(generics.RetrieveUpdateAPIView):
         serializer = User_details_serializer(request.user)
         return Response(serializer.data)
 
-class Decrease_quantity(APIView):
-  permission_classes = (permissions.IsAuthorOrReadOnly,)
-  def Decrease_quantity(self,food_id):
-        order = get_object_or_404(Foodorder,i_d = food_id)
+
+def Decrease_quantity(self,id):
+        order = get_object_or_404(Foodorder,i_d = id)
         if order.quantity > 1:
             order.quantity -= 1
             order.save()
@@ -37,11 +35,11 @@ class Decrease_quantity(APIView):
 
         return HttpResponseRedirect(reverse("Users:Get cart"))
 
-class Object_remove_view(APIView):
-    permission_classes = (permissions.IsAuthorOrReadOnly,)
+#class Object_remove_view(APIView):
+   # permission_classes = (permissions.IsAuthorOrReadOnly,)
 
-    def remove_object_from_cart(self,food_id):
-       order = get_object_or_404(Foodorder,i_d = food_id)
+def remove_object_from_cart(self,id):
+       order = get_object_or_404(Foodorder,i_d = id)
        order.delete()
        return HttpResponseRedirect(reverse("Users:Get cart"))
 
