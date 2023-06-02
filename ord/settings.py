@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     #local apps
     'menu.apps.MenuConfig',
     'Users.apps.UsersConfig',
+    'payments.apps.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +157,5 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
 MEDIA_URL = '/Media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'Media')
 EMAIL_HOST_USER = ""
+STRIPE_TEST_PUBLISHABLE_KEY = "pk_test_51MSoOrSJNTkbWxnLoKL067Pd6OQIBBaXFOpoM5AW6RsIu4FT984g8Qvg8peeZdNTdqSa7HWfrgDThNobq0loDHGu00DEhcj8LG"
+STRIPE_TEST_SECRET_KEY = "sk_test_51MSoOrSJNTkbWxnLX7qPVwvnoMeSd1r2JeF6ehc828Bm6uBzy9KGRuSywn1guMpOabtwu12XCdVBwfOPTUc5C814007dp9yi5T"

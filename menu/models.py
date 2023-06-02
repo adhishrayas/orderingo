@@ -26,6 +26,7 @@ class food(models.Model):
 class Cart(models.Model):
     Site_user = models.ForeignKey(CustomUser,on_delete= models.CASCADE,null=True)
     order_date = models.DateTimeField(blank=True,null = True)
+    cart_total = models.IntegerField(blank=True,default=0)
 
     def __str__(self):
         return str(self.Site_user) 
@@ -43,6 +44,6 @@ class Foodorder(models.Model):
         return str(self.name) 
     
     def cost(self):
-        return self.quantity*self.price
+        return int(self.quantity*self.price)
 
     

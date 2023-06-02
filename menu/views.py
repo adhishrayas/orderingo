@@ -15,11 +15,11 @@ class Menu_items_view(generics.ListAPIView):
     queryset = food.objects.all()
 
    
-class Menu_item_detail_view(generics.RetrieveUpdateAPIView):
+class Menu_item_detail_view(generics.RetrieveAPIView):
     serializer_class = Food_detail_serializer
     queryset = food.objects.all()
 
-    def update(self, request, pk, **kwargs):
+    def post(self, request, pk, **kwargs):
         item = get_object_or_404(food,pk = pk)
         cart,created = Cart.objects.get_or_create(Site_user = request.user)
         order,created = Foodorder.objects.get_or_create(i_d = pk,
@@ -28,6 +28,7 @@ class Menu_item_detail_view(generics.RetrieveUpdateAPIView):
                                                     name = item.food_name,
                                                     order_owner = str(request.user))
         order.cart_used.add(cart)
+        cart.cart_total += order.price
         order.quantity += 1
         order.save()
         return HttpResponseRedirect(reverse("menu:details",args = (pk,)))

@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from menu.models import Cart,Foodorder
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from rest_framework import generics
@@ -15,7 +15,6 @@ class get_cart_view(generics.ListAPIView):
     serializer_class = get_cart_serializer
     def get_queryset(self):
         return Foodorder.objects.filter(order_owner = self.request.user)
-
 
 class User_account_view(generics.RetrieveUpdateAPIView):
     serializer_class = User_details_serializer
@@ -35,9 +34,6 @@ def Decrease_quantity(self,id):
 
         return HttpResponseRedirect(reverse("Users:Get cart"))
 
-#class Object_remove_view(APIView):
-   # permission_classes = (permissions.IsAuthorOrReadOnly,)
-
 def remove_object_from_cart(self,id):
        order = get_object_or_404(Foodorder,i_d = id)
        order.delete()
@@ -50,4 +46,9 @@ class Delete_user(APIView):
     User = self.request.user
     User.delete()
     return HttpResponseRedirect(reverse("menu:Menu items"))
+  
+class cost(APIView):
      
+ def get(self,request):
+        total = sum(f.cost for f in Foodorder.objects.filter(order_owner = self.request.user))
+        return HttpResponse(total)
